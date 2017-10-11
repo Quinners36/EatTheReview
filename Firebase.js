@@ -1,3 +1,13 @@
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyD07XUsubZBt2kGhyG2xPOfOq49UZTyaw4",
+    authDomain: "eat-the-review.firebaseapp.com",
+    databaseURL: "https://eat-the-review.firebaseio.com",
+    projectId: "eat-the-review",
+    storageBucket: "",
+    messagingSenderId: "847435972429"
+  };
+  firebase.initializeApp(config);
 
 
 
