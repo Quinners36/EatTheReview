@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <!-- Script Connections-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
-    <script src="Firebase.js"></script>
+ 
 <style>
 /* Full-width input fields */
 input[type=text], input[type=password] {
@@ -93,7 +90,6 @@ button {
     }
 }
 </style>
-<body background = "Pizza.jpg">
 <br>
 <br>
 <br>
@@ -123,7 +119,19 @@ button {
     </div>
   </form>
 </div>
-
+<script src="https://www.gstatic.com/firebasejs/4.5.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAt5XgSRWY-rewwKJKoBvFAq8ZKUaF1lL0",
+    authDomain: "eatthereview-01.firebaseapp.com",
+    databaseURL: "https://eatthereview-01.firebaseio.com",
+    projectId: "eatthereview-01",
+    storageBucket: "eatthereview-01.appspot.com",
+    messagingSenderId: "423713584151"
+  };
+  firebase.initializeApp(config);
+</script>
 <script>
 // Get the modal
 var modal = document.getElementById('id01');
