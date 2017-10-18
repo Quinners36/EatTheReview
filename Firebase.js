@@ -1,7 +1,7 @@
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyD07XUsubZBt2kGhyG2xPOfOq49UZTyaw4",
-    authDomain: "eat-the-review.firebaseapp.com",
+    authDomain: "http://eatthereview.openode.io/",
     databaseURL: "https://eat-the-review.firebaseio.com",
     projectId: "eat-the-review",
     storageBucket: "",
@@ -16,7 +16,7 @@ firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(e
   // Handle Errors here.
   var errorCode = error.code;
   var errorMessage = error.message;
-  // ...
+  
 });
 
 //User Signing in
