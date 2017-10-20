@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
- 
+<!-- Script Connections-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+<script src="Firebase.js"></script>
 <style>
 /* Full-width input fields */
 input[type=text], input[type=password] {
@@ -101,37 +104,24 @@ button {
 
 <div id="id01" class="modal">
   <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
-  <form class="modal-content animate" action="/action_page.php">
+  <div class="modal-content animate">
     <div class="container">
       <label><b>Email</b></label>
-      <input type="text" placeholder="Enter Email" name="email" required>
+      <input id="signupemail" type="text" placeholder="Enter Email" name="email" required>
 
       <label><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input id="signuppassword" type="password" placeholder="Enter Password" name="psw" required>
 
       <label><b>Repeat Password</b></label>
       <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
 
       <div class="clearfix">
         <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-        <button type="submit" class="signupbtn">Login</button>
+        <button id="signupbutton" class="signupbtn">Sign-Up!</button>
       </div>
     </div>
-  </form>
+  </div>
 </div>
-<script src="https://www.gstatic.com/firebasejs/4.5.2/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAt5XgSRWY-rewwKJKoBvFAq8ZKUaF1lL0",
-    authDomain: "eatthereview-01.firebaseapp.com",
-    databaseURL: "https://eatthereview-01.firebaseio.com",
-    projectId: "eatthereview-01",
-    storageBucket: "eatthereview-01.appspot.com",
-    messagingSenderId: "423713584151"
-  };
-  firebase.initializeApp(config);
-</script>
 <script>
 // Get the modal
 var modal = document.getElementById('id01');
