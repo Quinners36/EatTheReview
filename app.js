@@ -12,21 +12,29 @@
   firebase.initializeApp(config);
 
   
-  const signupemail = document.getElementById("signupemail");
-  const signupassword =document.getElementById("signupassword");
-  const btnLogin=document.getElementById("btnLogin");
-  const btnSignup=document.getElementById("btnSignup");
+  const signupemail = document.getElementById('signupemail');
+  const signupassword =document.getElementById('signupassword');
+  const btnLogin=document.getElementById('btnLogin');
+  const btnSignup=document.getElementById('btnSignup');
   
   //Add login event 
-  btnSignup.addEventListener('click',e=> {
+  btnLogin.addEventListener('click',e=> {
 	  //get email and pass
 	  const email = signupemail.value;
 	  const pass = signupassword.value;
 	  const auth = firebase.auth();
 	  //sign in
 	  const promise = auth.signInWithEmailAndPassword(email,pass);
-	  promise
-	  .catch(e => console.log(e.message));
+	  promise.catch(e => console.log(e.message));
+  });
+    btnSignup.addEventListener('click',e=> {
+	  //get email and pass
+	  const email = signupemail.value;
+	  const pass = signupassword.value;
+	  const auth = firebase.auth();
+	  //sign in
+	  const promise = auth.createUserWithEmailAndPassword(email,pass);
+	  promise.catch(e => console.log(e.message));
   });
   firebase.auth().onAuthStateChanged(firebaseUser => {
 	  if(firebaseUser){
