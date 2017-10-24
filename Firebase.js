@@ -27,7 +27,6 @@ $('#signupbutton').click(function(){
 
 });
 
-});
 
 
 
@@ -38,3 +37,17 @@ firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error
   var errorMessage = error.message;
   // ...
 });
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    window.location.href="RoughHomePage.html";
+  } else {
+    // No user is signed in.
+  }
+});
+  
+  
+  
+  
+  });
