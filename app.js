@@ -12,16 +12,16 @@
   firebase.initializeApp(config);
 
   
-  const signupmail = document.getElementById("signupemail");
+  const signupemail = document.getElementById("signupemail");
   const signupassword =document.getElementById("signupassword");
   const btnLogin=document.getElementById("btnLogin");
   const btnSignup=document.getElementById("btnSignup");
   
   //Add login event 
-  btnLogin.addEventListener('click',e=> {
+  btnSignup.addEventListener('click',e=> {
 	  //get email and pass
-	  const email = txtEmail.value;
-	  const pass = txtPassword.value;
+	  const email = signupemail.value;
+	  const pass = signupassword.value;
 	  const auth = firebase.auth();
 	  //sign in
 	  const promise = auth.signInWithEmailAndPassword(email,pass);
