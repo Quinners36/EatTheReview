@@ -13,7 +13,7 @@ $(document).ready(function(){
 
 
 //User registering
-$('#signup').click(function(){
+$('#signupbutton').click(function(){
 
     var email=$('#signupemail').val();
     var password=$('#signuppassword').val();
