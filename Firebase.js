@@ -41,7 +41,7 @@ firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     // User is signed in.
-    window.location.href="RoughHomePage.html";
+    window.location="RoughHomePage.html";
   } else {
     // No user is signed in.
   }
