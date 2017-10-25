@@ -42,18 +42,13 @@ $(document).ready(function(){
 
   });
 
-  $('#signout').click(function(){ 
-    firebase.auth().signOut();
-                                
-  });
-
 
 });
 
   firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-          window.location = 'RoughHomePage.html';
+          window.location = 'Main.html';
       } else {
-          // No user is signed in.
       }
   });
+ 
