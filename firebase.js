@@ -42,6 +42,13 @@ $(document).ready(function(){
 
   });
 
+  $('#signout').click(function(){ 
+    firebase.auth().signOut();
+                                
+  });
+
+
+});
 
   firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
@@ -50,4 +57,3 @@ $(document).ready(function(){
           // No user is signed in.
       }
   });
-});
