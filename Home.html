@@ -1,0 +1,267 @@
+<DOCTYPE! html>
+<html>
+<body>
+<header>
+<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src = "firebase2.js"></script>
+<center><img id = "logo" src = "logo.png"></center>
+<button id = "signout">Logout</button>
+<a href = "Review.html"><button id = "review">Review</button></a>
+<a href = "Settings.html" ><button id = "settings">Account settings</button></a>
+<form>
+<center><input id = "pac-input" class = "controls" type = "text" placeholder = "Search.."></center>
+</form>
+
+</header>
+<div id="map"></div>
+<!-- Replace the value of the key parameter with your own API key. -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBX7BVODfbFpIbQKK66RkQ86sQFo1FCxrY&libraries=places&callback=initAutocomplete"
+         async defer></script>
+		 
+		 <script>
+		 function initAutocomplete() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: -33.8688, lng: 151.2195},
+    zoom: 13,
+    mapTypeId: 'roadmap'
+  });
+  var infowindow = new google.maps.InfoWindow();
+  
+  
+  
+  // to show users current location
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (p) {
+         var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+        var mapOptions = {
+            center: LatLng,
+            zoom: 13,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+         map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        var marker = new google.maps.Marker({
+            position: LatLng,
+            map: map,
+            title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
+        });
+        google.maps.event.addListener(marker, "click", function (e) {
+             var infoWindow = new google.maps.InfoWindow();
+            infoWindow.setContent(marker.title);
+            infoWindow.open(map, marker);
+        });
+		
+		
+		
+		// to mark all nearby restaurants
+	var service = new google.maps.places.PlacesService(map);
+            service.nearbySearch({
+                location : LatLng,
+                radius : 5000,
+				type : [ 'restaurant' ]
+            }, callback);
+			function callback(results, status) {
+				if (status === google.maps.places.PlacesServiceStatus.OK) {
+					for (var i = 0; i < results.length; i++) {
+						createMarker(results[i]);
+                }
+            }
+        }
+		
+		function createMarker(place) {
+            var placeLoc = place.geometry.location;
+            var marker = new google.maps.Marker({
+				map : map,
+                position : place.geometry.location
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.setContent(place.name);
+                infowindow.open(map, this);
+            });
+        }
+		
+		
+		
+    });
+	
+	
+	
+	
+	
+	
+	
+	
+} else {
+    alert('Geo Location feature is not supported in this browser.');
+}
+  
+  
+  
+  
+  // Create the search box and link it to the UI element.
+  var input = document.getElementById('pac-input');
+   var searchBox = new google.maps.places.SearchBox(input); 
+ 
+  // Bias the SearchBox results towards current map's viewport.
+  map.addListener('bounds_changed', function() {
+    searchBox.setBounds(map.getBounds());
+  });
+  var markers = [];
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+    if (places.length == 0) {
+      return;
+    }
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+      marker.setMap(null);
+    });
+    markers = [];
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+      if (!place.geometry) {
+        console.log("Returned place contains no geometry");
+        return;
+      }
+      var icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+      // Create a marker for each place.
+      markers.push(new google.maps.Marker({
+        map: map,
+        icon: icon,
+        title: place.name,
+        position: place.geometry.location
+      }));
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+    map.fitBounds(bounds);
+  });
+}
+</script>
+<style>
+#map {
+  height: 100%;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#description {
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+}
+#infowindow-content .title {
+  font-weight: bold;
+}
+#infowindow-content {
+  display: none;
+}
+#map #infowindow-content {
+  display: inline;
+}
+.pac-card {
+  margin: 10px 10px 0 0;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+  font-family: Roboto;
+}
+.pac-controls {
+  display: inline-block;
+  padding: 5px 11px;
+}
+.pac-controls label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+#title {
+  color: #fff;
+  background-color: #4d90fe;
+  font-size: 25px;
+  font-weight: 500;
+  padding: 6px 12px;
+}
+#target {
+  width: 345px;
+}
+#logo {
+ 
+	border-radius: 100%;
+	height: 100px;
+	width; 120px;
+}
+input[type=text] {
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 12px;
+    background-color: white;
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+	position:relative;  
+    
+}
+input[type=text]:focus {
+    width: 25%;
+}
+header{
+background-color: #A31621;
+}
+#signout{
+position: absolute;
+  height: 50px;
+  color: rgba(255, 255, 255, 0.8);
+  background: #FF3366;
+  font-size: 10px;
+  border-radius: 50px;
+  cursor: pointer;
+left: 95%;
+top : 12%;
+}
+#settings{
+position: absolute;
+  height: 50px;
+  color: rgba(255, 255, 255, 0.8);
+  background: #FF3366;
+  font-size: 10px;
+  border-radius: 50px;
+  cursor: pointer;
+right: 85%;
+top : 12%;
+}
+#review{
+position: absolute;
+  height: 50px;
+  color: rgba(255, 255, 255, 0.8);
+  background: #FF3366;
+  font-size: 10px;
+  border-radius: 50px;
+  cursor: pointer;
+right: 95%;
+top : 12%;}
+</style>
+</body>
+</html>
