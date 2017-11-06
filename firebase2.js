@@ -20,4 +20,20 @@ $(document).ready(function(){
 	});
 
 
+    $('#submitReview').click(function(){
+
+        var ResterauntName=$('#RName').val();
+        var ResterauntRating=$('#RRating').val();
+        var ResterauntReview=$('#RReview').val();
+
+        firebase.database().ref('Reviews').push({
+            ResterauntName: ResterauntName,
+            ResterauntRating: ResterauntRating,
+            ResterauntReview : ResterauntReview
+        });
+    });
+
+
+
+
 });
