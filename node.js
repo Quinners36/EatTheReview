@@ -1,4 +1,4 @@
-/*var http = require('http');
+var http = require('http');
 var fs = require('fs');
 
 //The index.html must be the same name as the opening page as this is our way into the app 
@@ -13,12 +13,11 @@ fs.readFile('index.html', function (err, html)
         response.end();  
     }).listen(80);
 });
-*/
+/*
 var express = require("express");
 var app = express();
 var router = express.Router();
 var path = __dirname + '/';
-
 
 
 router.use(function (req,res,next) {
@@ -60,3 +59,4 @@ app.listen(80,function(){
   console.log("Live at Port 80");
 });
 
+*/
