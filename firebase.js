@@ -47,7 +47,7 @@ $(document).ready(function(){
 
   firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-          window.location = 'Main.html';
+          window.location = 'Home.html';
       } else {
       }
   });
