@@ -10,6 +10,7 @@ firebase.initializeApp(config);
 
 $(document).ready(function(){
 
+    var user;
 
 //User registering
   $('#btnSignup').click(function(){
@@ -40,15 +41,62 @@ $(document).ready(function(){
           // ...
       });
 
+      user = firebase.auth().currentUser;
+
+      if (user) {
+          window.location = 'Home.html';
+      } else {
+          // No user is signed in.
+      }
+
   });
 
+  $('#signout').click(function(){
+        firebase.auth().signOut().then(function() {
+            window.location ='index.html'
+        }, function(error) {
+            // An error happened.
+        });
+    });
+
+  $('#test').click(function(){
+      user=firebase.auth().currentUser;
+      console.log("Running1");
+      console.log(user);
+
+      if (user != null) {
+          console.log("Running2");
+          user.providerData.forEach(function (profile) {
+              console.log("Sign-in provider: " + profile.providerId);
+              console.log("  Provider-specific UID: " + profile.uid);
+              console.log("  Name: " + profile.displayName);
+              console.log("  Email: " + profile.email);
+              console.log("  Photo URL: " + profile.photoURL);
+          });
+        }
+    });
+
+  $('#submitReview').click(function(){
+
+
+        var ResterauntName=$('#RName').val();
+        var ResterauntRating=$('#RRating').val();
+        var ResterauntReview=$('#RReview').val();
+
+        firebase.database().ref('Reviews').push({
+            ResterauntName: ResterauntName,
+            ResterauntRating: ResterauntRating,
+            ResterauntReview : ResterauntReview
+        });
+    });
 
 });
 
   firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-          window.location = 'Home.html';
+        console.log(user.uid);
       } else {
+
       }
   });
  
