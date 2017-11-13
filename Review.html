@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src = "firebase.js"></script>
 <style>
 input[type=text], select, textarea {
     width: 100%;
@@ -48,14 +51,13 @@ background-color: #c62323;
 <center> <b> Restaurant Review </b> </center>
 
 <div class="container">
-  <form action="/action_page.php">
     <label for="fname">Restaurant Name</label>
-    <input type="text" id="fname" name="firstname" placeholder="Enter the restaurant name">
+    <input type="text" id="RName" name="firstname" placeholder="Enter the restaurant name">
 
  
 
     <label for="country">Rating out of 5?</label>
-    <select id="RATING" name="RATING">
+    <select id="RRating" name="RATING">
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
@@ -64,7 +66,7 @@ background-color: #c62323;
     </select>
 
     <label for="subject">Restaurant Review</label>
-    <textarea id="subject" name="subject" placeholder="Write something based on your experience" style="height:200px"></textarea>
+    <textarea id="RReview" name="subject" placeholder="Write something based on your experience" style="height:200px"></textarea>
      
 	 <label for="lname">Would you recommend this place?</label>
 	 <select id="RATING" name="RATING">
@@ -72,8 +74,7 @@ background-color: #c62323;
       <option value="FALSE">NO!</option>
       
     </select>
-    <input type="submit" value="Submit">
-  </form>
+    <input id="submitReview" type="submit" value="Submit">
 </div>
 
 </body>
