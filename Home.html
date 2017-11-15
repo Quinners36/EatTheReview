@@ -27,7 +27,7 @@
     mapTypeId: 'roadmap'
   });
   var infowindow = new google.maps.InfoWindow();
-  
+  var labels = 'RBC';
   
   
   // to show users current location
@@ -54,36 +54,88 @@
 		
 		
 		// to mark all nearby restaurants
-	var service = new google.maps.places.PlacesService(map);
+		var service = new google.maps.places.PlacesService(map);
             service.nearbySearch({
                 location : LatLng,
-                radius : 5000,
-				type : [ 'restaurant' ]
-            }, callback);
-			function callback(results, status) {
-				if (status === google.maps.places.PlacesServiceStatus.OK) {
-					for (var i = 0; i < results.length; i++) {
-						createMarker(results[i]);
-                }
-            }
+                radius : 2000,
+				type : [ 'restaurant']
+            }, processResults);
+			
+			  function processResults(results, status, pagination) {
+        if (status !== google.maps.places.PlacesServiceStatus.OK) {
+          return;
+        } else {
+          results.forEach(createMarker);
+
+          if (pagination.hasNextPage) {
+            var moreButton = document.getElementById('more');
+
+            moreButton.disabled = false;
+
+            moreButton.addEventListener('click', function() {
+			results.forEach(createMarker);
+              moreButton.disabled = false;
+              pagination.nextPage();
+            });
+          }
         }
+      }
 		
 		function createMarker(place) {
+			
             var placeLoc = place.geometry.location;
             var marker = new google.maps.Marker({
 				map : map,
+				label: labels[0],
                 position : place.geometry.location
             });
-            google.maps.event.addListener(marker, 'click', function() {
-                infowindow.setContent(place.name);
-                infowindow.open(map, this);
+			/*var request = { reference: place.reference };
+			service.getDetails(request, function(details, status) {*/
+			
+			
+			marker.addListener('click', function() {
+			var request = { reference: place.reference };
+			service.getDetails(request, function(details, status) {
+				var photos = details.photos;
+				var photoURL = photos[0].getUrl({'maxWidth': 135, 'maxHeight': 135});
+				var img = document.createElement('img');
+				img.src = 'photoURL';
+				var Str = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading">' + details.name + '</h1>'+
+            '<div id="bodyContent">'+
+			 
+            '<p><b>Address: </b>' + details.formatted_address + ' <br> ' +
+			'<b>Website: </b>' + details.website + '<br>' +
+			'<b>Phone number: </b>' +  details.formatted_phone_number + ' <br>' +
+			'<a href = "reviewPage1.html"> Leave a review </a>'
+            '</div>'+
+            '</div>';
+				
+				
+				
+				
+				
+				
+              infowindow.setContent([
+                Str].join("<br />"));
+				
+              infowindow.open(map, marker);
             });
+			
+			
+				
+			});
+			 
+			
+			
         }
-		
+		window.onload = initAutocomplete;
+
 		
 		
     });
-	
 	
 	
 	
@@ -265,3 +317,14 @@ top : 12%;}
 </style>
 </body>
 </html>
+© 2017 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+API
+Training
+Shop
+Blog
