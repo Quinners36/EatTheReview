@@ -59,7 +59,7 @@ $(document).ready(function(){
         });
     });
 
-  $('#test').click(function(){
+  $('#ChangePassword').click(function(){
       user=firebase.auth().currentUser;
       console.log("Running1");
       console.log(user);
@@ -74,6 +74,45 @@ $(document).ready(function(){
               console.log("  Photo URL: " + profile.photoURL);
           });
         }
+    });
+	
+	$('#ChangeEmail').click(function(){
+      user=firebase.auth().currentUser;
+      console.log("Running1");
+      console.log(user);
+
+      if (user != null) {
+          console.log("Running2");
+          user.providerData.forEach(function (profile) {
+              console.log("Sign-in provider: " + profile.providerId);
+              console.log("  Provider-specific UID: " + profile.uid);
+              console.log("  Name: " + profile.displayName);
+              console.log("  Email: " + profile.email);
+              console.log("  Photo URL: " + profile.photoURL);
+          });
+        }
+    });
+	
+	$('#ChangeInfo').click(function(){
+		
+		user=firebase.auth().currentUser;
+		var Ad1=$('#AddressL1').val();
+		var Ad2=$('#AddressL2').val();
+		var City=$('City').val();
+		var County=$('#Country').val();
+		var PC=$('#PCode').val();
+		var Country=$('#Country').val();
+		
+		
+		firebase.database().ref('users/' + user).set({
+		AddressLine1: Ad1,
+		AddressLine2: Ad2,
+		City : City,
+		County : County,
+		PostCode : PC,
+		Country : Country
+		});
+
     });
 
   $('#submitReview').click(function(){
