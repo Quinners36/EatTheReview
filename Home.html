@@ -1,19 +1,26 @@
-<!DOCTYPE html>
+<DOCTYPE! html>
 <html>
 <body>
 <header>
-	<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src = "firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src = "firebase.js"></script>
 <center><img id = "logo" src = "logo.png"></center>
-<button id = "signout">Logout</button>
-<a href = "Review.html"><button id = "review">Review</button></a>
-<a href = "Settings.html" ><button id = "settings">Account settings</button></a>
-<form>
-<center><input id = "pac-input" class = "controls" type = "text" placeholder = "Search.."></center>
-</form>
+<div class="dropdown">
+<button id = "moreResults" class = "moreResults" >Show all nearby restaurants</button>
+<button onclick="myFunction()" class="dropbtn">Dropdown</button>
+  <div id="myDropdown" class="dropdown-content">
+    <a href="Settings.html">Account Settings</a>
+    <a href="About.html">About</a>
+    <a id = "signout">Logout</a>
+  </div>
+</div>
+
 
 </header>
+<form>
+<input id = "pac-input" class = "controls" type = "text" placeholder = "Search..">
+</form>
 <div id="map"></div>
 <!-- Replace the value of the key parameter with your own API key. -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBX7BVODfbFpIbQKK66RkQ86sQFo1FCxrY&libraries=places&callback=initAutocomplete"
@@ -22,9 +29,257 @@
 		 <script>
 		 function initAutocomplete() {
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -33.8688, lng: 151.2195},
-    zoom: 13,
-    mapTypeId: 'roadmap'
+    center: {lat: 53.2734, lng: -7.778320310000026},
+    zoom: 6,
+    mapTypeId: 'roadmap',
+	styles: [
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#808080"
+            },
+            {
+                "lightness": -100
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#b72025"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "color": "#b72025"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": -14
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#b72025"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": -100
+            },
+            {
+                "weight": 0.2
+            }
+        ]
+    },
+    {
+        "featureType": "landscape.natural",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#808080"
+            },
+            {
+                "lightness": 33
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#808080"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.sports_complex",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": -100
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": -9
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "saturation": -100
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "color": "#b72025"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": -100
+            },
+            {
+                "weight": 0.3
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": -100
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "saturation": -100
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {},
+    {
+        "featureType": "road.local",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": 13
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "invert_lightness": true
+            },
+            {
+                "lightness": -4
+            },
+            {
+                "saturation": -90
+            },
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            {
+                "weight": 0.1
+            }
+        ]
+    },
+    {
+        "featureType": "landscape.natural",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "color": "#b72025"
+            }
+        ]
+    }
+]
   });
   var infowindow = new google.maps.InfoWindow();
   var labels = 'RBC';
@@ -36,8 +291,256 @@
          var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
         var mapOptions = {
             center: LatLng,
-            zoom: 13,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            zoom: 6,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+			styles: [
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#808080"
+            },
+            {
+                "lightness": -100
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#b72025"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "color": "#b72025"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": -14
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#b72025"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": -100
+            },
+            {
+                "weight": 0.2
+            }
+        ]
+    },
+    {
+        "featureType": "landscape.natural",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#808080"
+            },
+            {
+                "lightness": 33
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#808080"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.sports_complex",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": -100
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": -9
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "saturation": -100
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "color": "#b72025"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": -100
+            },
+            {
+                "weight": 0.3
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": -100
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "saturation": -100
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {},
+    {
+        "featureType": "road.local",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": 13
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "invert_lightness": true
+            },
+            {
+                "lightness": -4
+            },
+            {
+                "saturation": -90
+            },
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            {
+                "weight": 0.1
+            }
+        ]
+    },
+    {
+        "featureType": "landscape.natural",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "color": "#b72025"
+            }
+        ]
+    }
+]
         };
          map = new google.maps.Map(document.getElementById("map"), mapOptions);
         var marker = new google.maps.Marker({
@@ -54,27 +557,27 @@
 		
 		
 		// to mark all nearby restaurants
-		var service = new google.maps.places.PlacesService(map);
+	var service = new google.maps.places.PlacesService(map);
             service.nearbySearch({
                 location : LatLng,
                 radius : 2000,
-				type : [ 'restaurant']
+				type : [ 'restaurant'],
+				animation: google.maps.Animation.DROP
             }, processResults);
-			
-			  function processResults(results, status, pagination) {
+			 function processResults(results, status, pagination) {
         if (status !== google.maps.places.PlacesServiceStatus.OK) {
           return;
         } else {
           results.forEach(createMarker);
-
+			// if more than 20 results, click this button to show all nearby restaurants
           if (pagination.hasNextPage) {
-            var moreButton = document.getElementById('more');
+            var morePlaces = document.getElementById('moreResults');
+			
+            morePlaces.disabled = false;
 
-            moreButton.disabled = false;
-
-            moreButton.addEventListener('click', function() {
+            morePlaces.addEventListener('click', function() {
 			results.forEach(createMarker);
-              moreButton.disabled = false;
+              morePlaces.disabled = false;
               pagination.nextPage();
             });
           }
@@ -82,34 +585,30 @@
       }
 		
 		function createMarker(place) {
-			
             var placeLoc = place.geometry.location;
             var marker = new google.maps.Marker({
 				map : map,
 				label: labels[0],
                 position : place.geometry.location
             });
-			/*var request = { reference: place.reference };
-			service.getDetails(request, function(details, status) {*/
+			
 			
 			
 			marker.addListener('click', function() {
 			var request = { reference: place.reference };
 			service.getDetails(request, function(details, status) {
-				var photos = details.photos;
-				var photoURL = photos[0].getUrl({'maxWidth': 135, 'maxHeight': 135});
-				var img = document.createElement('img');
-				img.src = 'photoURL';
+				
+				//string with all restaurnt details
 				var Str = '<div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
             '<h1 id="firstHeading" class="firstHeading">' + details.name + '</h1>'+
             '<div id="bodyContent">'+
-			 
+			
             '<p><b>Address: </b>' + details.formatted_address + ' <br> ' +
 			'<b>Website: </b>' + details.website + '<br>' +
 			'<b>Phone number: </b>' +  details.formatted_phone_number + ' <br>' +
-// 			'<a href = "reviewPage1.html?'+details.id+'"> Leave a review </a>'
+			'<a href = "Review.html"> Leave a review </a>'
             '</div>'+
             '</div>';
 				
@@ -140,12 +639,19 @@
 	
 	
 	
+
+	
 	
 	
 	
 } else {
     alert('Geo Location feature is not supported in this browser.');
 }
+
+
+
+
+
   
   
   
@@ -202,15 +708,40 @@
     map.fitBounds(bounds);
   });
 }
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
 </script>
 <style>
 #map {
-  height: 100%;
-}
+  height: 75%;
+  width: 75%;
+  margin: 0 auto 0 auto;
+  border-radius: 20px;
+  border: solid;
+  border-color: black;
+  }
+
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+    background-image: url("https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-294468.jpg");
 }
 #description {
   font-family: Roboto;
@@ -256,10 +787,9 @@ html, body {
   width: 345px;
 }
 #logo {
- 
 	border-radius: 100%;
 	height: 100px;
-	width: 160px;
+	width; 120px;
 }
 input[type=text] {
     width: 130px;
@@ -279,43 +809,75 @@ input[type=text] {
 input[type=text]:focus {
     width: 25%;
 }
-header{
-background-color: #A31621;
-	width:100%;
-	height:18%
+
+header {
+  background: -webkit-linear-gradient(top, rgba(163, 22, 33, 1) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(to bottom, rgba(163, 22, 33, 1) 0%, rgba(0, 0, 0, 0.6) 100%);
+  }
+
+
+.dropbtn {
+  background: -webkit-linear-gradient(top, rgba(163, 22, 33, 1) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(to bottom, rgba(163, 22, 33, 1) 0%, rgba(0, 0, 0, 0.6) 100%);
+    color: white;
+    padding: 16px;
+    font-size: 8px;
+    border: 2px solid black;
+    cursor: pointer;
+   position:absolute;
+
+    bottom: 1px;
+	
 }
-#signout{
-position: absolute;
-  height: 50px;
-  color: rgba(255, 255, 255, 0.8);
-  background: #FF3366;
-  font-size: 10px;
-  border-radius: 50px;
-  cursor: pointer;
-left: 95%;
-top : 12%;
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: black;
 }
-#settings{
-position: absolute;
-  height: 50px;
-  color: rgba(255, 255, 255, 0.8);
-  background: #FF3366;
-  font-size: 10px;
-  border-radius: 50px;
-  cursor: pointer;
-right: 85%;
-top : 12%;
+
+.dropdown {
+    position: relative;
+    display: inline-block;
 }
-#review{
-position: absolute;
-  height: 50px;
-  color: rgba(255, 255, 255, 0.8);
-  background: #FF3366;
-  font-size: 10px;
-  border-radius: 50px;
-  cursor: pointer;
-right: 95%;
-top : 12%;}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.moreResults{
+background: -webkit-linear-gradient(top, rgba(163, 22, 33, 1) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(to bottom, rgba(163, 22, 33, 1) 0%, rgba(0, 0, 0, 0.6) 100%);
+    color: white;
+    padding: 16px;
+    font-size: 8px;
+    border: 2px solid black;
+    cursor: pointer;
+   position:absolute;
+	left: 50%;
+    bottom: 1px;}
+	
+.moreResults {
+    position: relative;
+    display: inline-block;
+	
+}
+
+
+
+
+.show {display:block;}
+.show {display:block;}
 </style>
 </body>
 </html>
