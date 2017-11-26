@@ -60,41 +60,33 @@ $(document).ready(function(){
     });
 
   $('#ChangePassword').click(function(){
-      user=firebase.auth().currentUser;
-      console.log("Running1");
-      console.log(user);
+    var user = firebase.auth().currentUser;
+    var newPassword = $('NPassword').val();
 
-      if (user != null) {
-          console.log("Running2");
-          user.providerData.forEach(function (profile) {
-              console.log("Sign-in provider: " + profile.providerId);
-              console.log("  Provider-specific UID: " + profile.uid);
-              console.log("  Name: " + profile.displayName);
-              console.log("  Email: " + profile.email);
-              console.log("  Photo URL: " + profile.photoURL);
-          });
-        }
+    user.updatePassword(newPassword).then(function() {
+      // Update successful.
+      console.log("Updated successful")
+    }).catch(function(error) {
+      // An error happened.
+      console.log("Fail")
     });
-	
+    });
+
 	$('#ChangeEmail').click(function(){
-      user=firebase.auth().currentUser;
-      console.log("Running1");
-      console.log(user);
+    var user = firebase.auth().currentUser;
+    var NEmail=$('Email').val();
 
-      if (user != null) {
-          console.log("Running2");
-          user.providerData.forEach(function (profile) {
-              console.log("Sign-in provider: " + profile.providerId);
-              console.log("  Provider-specific UID: " + profile.uid);
-              console.log("  Name: " + profile.displayName);
-              console.log("  Email: " + profile.email);
-              console.log("  Photo URL: " + profile.photoURL);
-          });
-        }
+    user.updateEmail(NEmail).then(function() {
+      // Update successful.
+      console.log("Updated successful")
+    }).catch(function(error) {
+      // An error happened.
+      console.log("Fail")
     });
-	
+    });
+
 	$('#ChangeInfo').click(function(){
-		
+
 		user=firebase.auth().currentUser;
 		var Ad1=$('#AddressL1').val();
 		var Ad2=$('#AddressL2').val();
@@ -102,8 +94,8 @@ $(document).ready(function(){
 		var County=$('#Country').val();
 		var PC=$('#PCode').val();
 		var Country=$('#Country').val();
-		
-		
+
+
 		firebase.database().ref('users/' + user).set({
 		AddressLine1: Ad1,
 		AddressLine2: Ad2,
@@ -138,4 +130,3 @@ $(document).ready(function(){
 
       }
   });
- 
