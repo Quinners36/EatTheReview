@@ -88,20 +88,22 @@ $(document).ready(function(){
 	$('#ChangeInfo').click(function(){
 
 		user=firebase.auth().currentUser;
+
 		var Ad1=$('#AddressL1').val();
 		var Ad2=$('#AddressL2').val();
-		var City=$('City').val();
-		var County=$('#Country').val();
-		var PC=$('#PCode').val();
+		var City=$('#City').val();
+		var County=$('#County').val();
+		var PCo=$('#PCode').val();
 		var Country=$('#Country').val();
+    console.log("Running");
 
 
-		firebase.database().ref('users/' + user).set({
+		firebase.database().ref('users/' + user.uid).set({
 		AddressLine1: Ad1,
 		AddressLine2: Ad2,
 		City : City,
 		County : County,
-		PostCode : PC,
+		PostCode : PCo,
 		Country : Country
 		});
 

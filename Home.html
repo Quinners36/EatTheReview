@@ -10,7 +10,7 @@
 <button id = "moreResults" class = "moreResults" >Show all nearby restaurants</button>
 <button onclick="myFunction()" class="dropbtn">Dropdown</button>
   <div id="myDropdown" class="dropdown-content">
-    <a href="Settings.html">Account Settings</a>
+    <a href="AccountSettings.html">Account Settings</a>
     <a href="About.html">About</a>
     <a id = "signout">Logout</a>
   </div>
@@ -25,7 +25,7 @@
 <!-- Replace the value of the key parameter with your own API key. -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBX7BVODfbFpIbQKK66RkQ86sQFo1FCxrY&libraries=places&callback=initAutocomplete"
          async defer></script>
-		 
+
 		 <script>
 		 function initAutocomplete() {
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -283,8 +283,8 @@
   });
   var infowindow = new google.maps.InfoWindow();
   var labels = 'RBC';
-  
-  
+
+
   // to show users current location
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (p) {
@@ -553,9 +553,9 @@
             infoWindow.setContent(marker.title);
             infoWindow.open(map, marker);
         });
-		
-		
-		
+
+
+
 		// to mark all nearby restaurants
 	var service = new google.maps.places.PlacesService(map);
             service.nearbySearch({
@@ -572,7 +572,7 @@
 			// if more than 20 results, click this button to show all nearby restaurants
           if (pagination.hasNextPage) {
             var morePlaces = document.getElementById('moreResults');
-			
+
             morePlaces.disabled = false;
 
             morePlaces.addEventListener('click', function() {
@@ -583,7 +583,7 @@
           }
         }
       }
-		
+
 		function createMarker(place) {
             var placeLoc = place.geometry.location;
             var marker = new google.maps.Marker({
@@ -591,59 +591,59 @@
 				label: labels[0],
                 position : place.geometry.location
             });
-			
-			
-			
+
+
+
 			marker.addListener('click', function() {
 			var request = { reference: place.reference };
 			service.getDetails(request, function(details, status) {
-				
+
 				//string with all restaurnt details
 				var Str = '<div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
             '<h1 id="firstHeading" class="firstHeading">' + details.name + '</h1>'+
             '<div id="bodyContent">'+
-			
+
             '<p><b>Address: </b>' + details.formatted_address + ' <br> ' +
 			'<b>Website: </b>' + details.website + '<br>' +
 			'<b>Phone number: </b>' +  details.formatted_phone_number + ' <br>' +
 			'<a href = "Review.html"> Leave a review </a>'
             '</div>'+
             '</div>';
-				
-				
-				
-				
-				
-				
+
+
+
+
+
+
               infowindow.setContent([
                 Str].join("<br />"));
-				
+
               infowindow.open(map, marker);
             });
-			
-			
-				
+
+
+
 			});
-			 
-			
-			
+
+
+
         }
 		window.onload = initAutocomplete;
 
-		
-		
-    });
-	
-	
-	
-	
 
-	
-	
-	
-	
+
+    });
+
+
+
+
+
+
+
+
+
 } else {
     alert('Geo Location feature is not supported in this browser.');
 }
@@ -652,14 +652,14 @@
 
 
 
-  
-  
-  
-  
+
+
+
+
   // Create the search box and link it to the UI element.
   var input = document.getElementById('pac-input');
-   var searchBox = new google.maps.places.SearchBox(input); 
- 
+   var searchBox = new google.maps.places.SearchBox(input);
+
   // Bias the SearchBox results towards current map's viewport.
   map.addListener('bounds_changed', function() {
     searchBox.setBounds(map.getBounds());
@@ -798,13 +798,13 @@ input[type=text] {
     border-radius: 4px;
     font-size: 12px;
     background-color: white;
-    background-position: 10px 10px; 
+    background-position: 10px 10px;
     background-repeat: no-repeat;
     padding: 12px 20px 12px 40px;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
-	position:relative;  
-    
+	position:relative;
+
 }
 input[type=text]:focus {
     width: 25%;
@@ -827,7 +827,7 @@ header {
    position:absolute;
 
     bottom: 1px;
-	
+
 }
 
 .dropbtn:hover, .dropbtn:focus {
@@ -866,11 +866,11 @@ background: -webkit-linear-gradient(top, rgba(163, 22, 33, 1) 0%, rgba(0, 0, 0, 
    position:absolute;
 	left: 50%;
     bottom: 1px;}
-	
+
 .moreResults {
     position: relative;
     display: inline-block;
-	
+
 }
 
 
