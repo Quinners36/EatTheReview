@@ -138,7 +138,7 @@ $(document).ready(function(){
 
     });
 	
-	$('#test').click(function(){
+
 		var a = window.location.toString();
 		var Ruid = a.substring(a.indexOf("?")+1);
 
@@ -153,21 +153,18 @@ $(document).ready(function(){
         .then(function(snapshot) {
           ref.once("value", function(snapshot) {
             snapshot.forEach(function(child) {
-			var title = child.val().Author;
-			var title = child.val().Author;
-			var title = child.val().Author;
+			var Author = child.val().Author;
+			var Rating = child.val().ResterauntRating;
+			var Review = child.val().ResterauntReview;
 			
-			console.log(title);
-              });
+			var html=$('#RArea').html();
+			
+			html=html+'<div> Author: '+Author+'<br> Rating: '+Rating+'<br> Review:<br>'+Review+'</div>';
+			$('#RArea').html(html);
+			console.log(Author);
             });
+          });
         });
-		
-		
-		
-		
-		
-		firebase.database().ref('ResterauntReviews/' + Ruid).orderByChild('ResterauntRating')
-    });
 
 });
 
