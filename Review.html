@@ -74,8 +74,15 @@ background-color: #c62323;
       <option value="FALSE">NO!</option>
       
     </select>
-    <input id="submitReview" type="submit" value="Submit">
+    <input id="submitReview" type="submit" value="Submit" onclick="return Home();">
 </div>
-
+<script>
+function Home()
+{
+	window.alert("Review sumbitted");
+	window.open("Home.html", "_self");
+	return true;
+}
+</script>
 </body>
 </html>
