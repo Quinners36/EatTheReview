@@ -110,17 +110,63 @@ $(document).ready(function(){
     });
 
   $('#submitReview').click(function(){
-
+		var user = firebase.auth().currentUser;
+		
+		var a = window.location.toString();
+		var Ruid = a.substring(a.indexOf("?")+1);
 
         var ResterauntName=$('#RName').val();
         var ResterauntRating=$('#RRating').val();
         var ResterauntReview=$('#RReview').val();
 
-        firebase.database().ref('Reviews').push({
-            ResterauntName: ResterauntName,
+		var postData={
+			
+			Author: user.email,
             ResterauntRating: ResterauntRating,
             ResterauntReview : ResterauntReview
+		}
+		
+		 // Get a key for a new Post.
+		var newReviewKey = firebase.database().ref().child('Reviews').push().key;
+
+		// Write the new post's data simultaneously in the posts list and the user's post list.
+		var updates = {};
+		updates['/ResterauntReviews/' + Ruid + '/' + newReviewKey] = postData;
+
+		return firebase.database().ref().update(updates);
+
+
+    });
+	
+	$('#test').click(function(){
+		var a = window.location.toString();
+		var Ruid = a.substring(a.indexOf("?")+1);
+
+        
+		
+		
+	  var database=firebase.database();
+      var ref=database.ref('ResterauntReviews/'+Ruid+'/').orderByChild('ResterauntRating');
+ 
+      //pull food from the db
+      ref.once("value")
+        .then(function(snapshot) {
+          ref.once("value", function(snapshot) {
+            snapshot.forEach(function(child) {
+			var title = child.val().Author;
+			var title = child.val().Author;
+			var title = child.val().Author;
+			
+			console.log(title);
+              });
+            });
         });
+		
+		
+		
+		
+		
+		firebase.database().ref('ResterauntReviews/' + Ruid).orderByChild('ResterauntRating')
     });
 
 });
