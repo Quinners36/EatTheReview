@@ -41,13 +41,17 @@ $(document).ready(function(){
           // ...
       });
 
-      user = firebase.auth().currentUser;
+      myVar = setTimeout(function(){
+        var user = firebase.auth().currentUser;
+        console.log(user);
 
-      if (user) {
-          window.location = 'Home.html';
-      } else {
-          // No user is signed in.
-      }
+        if (user) {
+            window.location = 'Home.html';
+        } else {
+            // No user is signed in.
+        }
+      }, 1000);
+
 
   });
 
@@ -61,27 +65,31 @@ $(document).ready(function(){
 
   $('#ChangePassword').click(function(){
     var user = firebase.auth().currentUser;
-    var newPassword = $('NPassword').val();
+    var newPassword = $('#NewP').val();
+    console.log(newPassword);
+
 
     user.updatePassword(newPassword).then(function() {
       // Update successful.
       console.log("Updated successful")
     }).catch(function(error) {
       // An error happened.
-      console.log("Fail")
+      console.log("Fail");
+      console.log(error);
     });
     });
 
 	$('#ChangeEmail').click(function(){
     var user = firebase.auth().currentUser;
-    var NEmail=$('Email').val();
+    var NEmail=$('#NewE').val();
 
     user.updateEmail(NEmail).then(function() {
       // Update successful.
       console.log("Updated successful")
     }).catch(function(error) {
       // An error happened.
-      console.log("Fail")
+      console.log("Fail");
+      console.log(error);
     });
     });
 
@@ -111,7 +119,7 @@ $(document).ready(function(){
 
   $('#submitReview').click(function(){
 		var user = firebase.auth().currentUser;
-		
+
 		var a = window.location.toString();
 		var Ruid = a.substring(a.indexOf("?")+1);
 
@@ -120,12 +128,12 @@ $(document).ready(function(){
         var ResterauntReview=$('#RReview').val();
 
 		var postData={
-			
+
 			Author: user.email,
             ResterauntRating: ResterauntRating,
             ResterauntReview : ResterauntReview
 		}
-		
+
 		 // Get a key for a new Post.
 		var newReviewKey = firebase.database().ref().child('Reviews').push().key;
 
@@ -137,17 +145,17 @@ $(document).ready(function(){
 
 
     });
-	
+
 
 		var a = window.location.toString();
 		var Ruid = a.substring(a.indexOf("?")+1);
 
-        
-		
-		
+
+
+
 	  var database=firebase.database();
       var ref=database.ref('ResterauntReviews/'+Ruid+'/').orderByChild('ResterauntRating');
- 
+
       //pull food from the db
       ref.once("value")
         .then(function(snapshot) {
@@ -156,9 +164,9 @@ $(document).ready(function(){
 			var Author = child.val().Author;
 			var Rating = child.val().ResterauntRating;
 			var Review = child.val().ResterauntReview;
-			
+
 			var html=$('#RArea').html();
-			
+
 			html=html+'<div> Author: '+Author+'<br> Rating: '+Rating+'<br> Review:<br>'+Review+'</div>';
 			$('#RArea').html(html);
 			console.log(Author);
