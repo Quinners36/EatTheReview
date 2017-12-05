@@ -25,6 +25,17 @@ $(document).ready(function(){
           $('#errorarea').html(error.code +'<br>'+ error.message);
           // ...
       });
+	  
+	setTimeout(function(){
+        var user = firebase.auth().currentUser;
+        console.log(user);
+
+        if (user) {
+            window.location = 'Home.html';
+        } else {
+            // No user is signed in.
+        }
+}, 1000);
 
   });
 
