@@ -8,6 +8,25 @@ var config = {
 };
 firebase.initializeApp(config);
 
+function test(pla){
+
+  var postData={
+
+          Name: pla.name,
+          JustEatLink: 'test'
+  }
+
+   // Get a key for a new Post.
+  var newReviewKey = firebase.database().ref().child('Rest').push().key;
+
+  // Write the new post's data simultaneously in the posts list and the user's post list.
+  var updates = {};
+  updates['/Resteraunts/' + pla.id+ '/' + newReviewKey] = postData;
+
+  return firebase.database().ref().update(updates);
+
+}
+
 $(document).ready(function(){
 
     var user;
@@ -25,7 +44,7 @@ $(document).ready(function(){
           $('#errorarea').html(error.code +'<br>'+ error.message);
           // ...
       });
-	  
+
 	setTimeout(function(){
         var user = firebase.auth().currentUser;
         console.log(user);
@@ -176,6 +195,7 @@ $(document).ready(function(){
 			var Rating = child.val().ResterauntRating;
 			var Review = child.val().ResterauntReview;
 
+      console.log('test');
 			var html=$('#RArea').html();
 
 			html=html+'<div> Author: '+Author+'<br> Rating: '+Rating+'<br> Review:<br>'+Review+'</div>';
@@ -184,6 +204,8 @@ $(document).ready(function(){
             });
           });
         });
+
+
 
 });
 

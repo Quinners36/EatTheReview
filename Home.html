@@ -1,10 +1,11 @@
 <DOCTYPE! html>
 <html>
 <body>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src = "firebase.js"></script>
 <header>
-<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src = "firebase.js"></script>
+
 <center><img id = "logo" src = "logo.png"></center>
 <div class="dropdown">
 <button id = "moreResults" class = "moreResults" >Show all nearby restaurants</button>
@@ -585,6 +586,9 @@
       }
 
 		function createMarker(place) {
+      console.log(place.id);
+      console.log(place.name);
+      test(place);
             var placeLoc = place.geometry.location;
             var marker = new google.maps.Marker({
 				map : map,
