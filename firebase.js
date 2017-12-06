@@ -8,24 +8,6 @@ var config = {
 };
 firebase.initializeApp(config);
 
-function test(pla){
-
-  var postData={
-
-          Name: pla.name,
-          JustEatLink: 'test'
-  }
-
-   // Get a key for a new Post.
-  var newReviewKey = firebase.database().ref().child('Rest').push().key;
-
-  // Write the new post's data simultaneously in the posts list and the user's post list.
-  var updates = {};
-  updates['/Resteraunts/' + pla.id+ '/' + newReviewKey] = postData;
-
-  return firebase.database().ref().update(updates);
-
-}
 
 $(document).ready(function(){
 
