@@ -1,6 +1,7 @@
 <DOCTYPE! html>
 <html>
 <body>
+  <script src="Cookies.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src = "firebase.js"></script>
@@ -14,7 +15,9 @@
     <a href="AccountSettings.html">Account Settings</a>
     <a href="About.html">About</a>
     <a id = "signout">Logout</a>
+    <button id="Cookies" onclick="setCookie('Hello')">Cookie</button>
   </div>
+
 </div>
 
 
@@ -612,10 +615,14 @@
             '<p><b>Address: </b>' + details.formatted_address + ' <br> ' +
 			'<b>Website: </b>' + details.website + '<br>' +
 			'<b>Phone number: </b>' +  details.formatted_phone_number + ' <br>' +
-			'<a href = "Review.html?'+details.id+'"> Leave a review </a>' + ' <br>' +
-			'<a href = "readReview.html?'+details.id+'">Read reviews </a>'
-            '</div>'+
-            '</div>';
+      '<a href = "readReview.html?'+details.id+'">Read reviews </a>'+ ' <br>'+'<a href = "Review.html?'+details.id+'"> Leave a review </a>' + ' <br>'+'</div>'+'</div>';
+
+      //console.log(checkCookie());
+      //if(getCookie('RestID')==details.id){
+      //  Str=Str+'<a href = "Review.html?'+details.id+'"> Leave a review </a>' + ' <br>'+'</div>'+'</div>';
+      //}else{
+      //  Str=Str+'</div>'+'</div>';
+      //}
 
 
 
