@@ -2,9 +2,11 @@
 <html>
 <body>
   <script src="Cookies.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  
+   <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src = "firebase.js"></script>
+  
 <header>
 
 <center><img id = "logo" src = "logo.png"></center>
@@ -31,6 +33,7 @@
          async defer></script>
 
 		 <script>
+		 
 		 function initAutocomplete() {
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 53.2734, lng: -7.778320310000026},
@@ -558,20 +561,76 @@
             infoWindow.open(map, marker);
         });
 
+		var markers = [];
+		
+	  // Create the search box and link it to the UI element.
+	var input = document.getElementById('pac-input');
+   var searchBox = new google.maps.places.SearchBox(input);
 
-
-		// to mark all nearby restaurants
-	var service = new google.maps.places.PlacesService(map);
-            service.nearbySearch({
-                location : LatLng,
+  // Bias the SearchBox results towards current map's viewport.
+  map.addListener('bounds_changed', function() {
+    searchBox.setBounds(map.getBounds());
+  });
+  
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+	
+    if (places.length == 0) {
+      return;
+    }
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+      marker.setMap(null);
+    });
+    markers = [];
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+      if (!place.geometry) {
+        console.log("Returned place contains no geometry");
+        return;
+      }
+	  
+	  
+	  //check to see if place is a city/town
+	  if(place.website == undefined)
+	  {
+			
+			var marker2 = new google.maps.Marker({
+            position: place.geometry.location,
+            map: map,
+            title: place.name
+        });
+		markers.push(marker2);
+        google.maps.event.addListener(marker2, "click", function (e) {
+             var infoWindow = new google.maps.InfoWindow();
+            infoWindow.setContent(marker2.title);
+            infoWindow.open(map, marker2);
+        });
+		if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+	  
+        bounds.extend(place.geometry.location);
+      }
+	  var service2 = new google.maps.places.PlacesService(map);
+            service2.nearbySearch({
+                location : place.geometry.location,
                 radius : 2000,
 				type : [ 'restaurant'],
 				animation: google.maps.Animation.DROP
-            }, processResults);
-			 function processResults(results, status, pagination) {
+            }, processResults2);
+			
+			 function processResults2(results, status, pagination) {
         if (status !== google.maps.places.PlacesServiceStatus.OK) {
           return;
         } else {
+		
+		
+		
           results.forEach(createMarker);
 			// if more than 20 results, click this button to show all nearby restaurants
           if (pagination.hasNextPage) {
@@ -585,22 +644,87 @@
               pagination.nextPage();
             });
           }
+		   
+        }
+      }
+	  
+	  
+	  
+	  
+	  }else{
+	  
+	  
+	 createMarker(place);
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+	  
+        bounds.extend(place.geometry.location);
+      }
+	  }
+    });
+    map.fitBounds(bounds);
+	
+  });
+
+  
+  
+  
+		// to mark all nearby restaurants
+	var service = new google.maps.places.PlacesService(map);
+            service.nearbySearch({
+                location : LatLng,
+                radius : 2000,
+				type : [ 'restaurant'],
+				animation: google.maps.Animation.DROP
+            }, processResults);
+			
+			 function processResults(results, status, pagination) {
+        if (status !== google.maps.places.PlacesServiceStatus.OK) {
+          return;
+        } else {
+		
+		
+		
+          results.forEach(createMarker);
+			// if more than 20 results, click this button to show all nearby restaurants
+          if (pagination.hasNextPage) {
+            var morePlaces = document.getElementById('moreResults');
+
+            morePlaces.disabled = false;
+
+            morePlaces.addEventListener('click', function() {
+			results.forEach(createMarker);
+              morePlaces.disabled = false;
+              pagination.nextPage();
+            });
+          }
+		   
         }
       }
 
+		
 		function createMarker(place) {
       console.log(place.id);
       console.log(place.name);
-      test(place);
+	  //test function broke the location sevices
+      //test(place);
             var placeLoc = place.geometry.location;
             var marker = new google.maps.Marker({
 				map : map,
 				label: labels[0],
                 position : place.geometry.location
             });
-
-
-
+			markers.push(marker);
+			//var bounds2 = new google.maps.LatLngBounds();
+			/*if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds2.union(place.geometry.viewport);
+      } else {
+	  
+        bounds2.extend(place.geometry.location);
+      }*/
 			marker.addListener('click', function() {
 			var request = { reference: place.reference };
 			service.getDetails(request, function(details, status) {
@@ -624,11 +748,6 @@
       //  Str=Str+'</div>'+'</div>';
       //}
 
-
-
-
-
-
               infowindow.setContent([
                 Str].join("<br />"));
 
@@ -639,86 +758,20 @@
 
 			});
 
-
+	//map.fitBounds(bounds2);
 
         }
 		window.onload = initAutocomplete;
 
-
-
     });
-
-
-
-
-
-
-
 
 
 } else {
     alert('Geo Location feature is not supported in this browser.');
 }
 
+	
 
-
-
-
-
-
-
-
-  // Create the search box and link it to the UI element.
-  var input = document.getElementById('pac-input');
-   var searchBox = new google.maps.places.SearchBox(input);
-
-  // Bias the SearchBox results towards current map's viewport.
-  map.addListener('bounds_changed', function() {
-    searchBox.setBounds(map.getBounds());
-  });
-  var markers = [];
-  // Listen for the event fired when the user selects a prediction and retrieve
-  // more details for that place.
-  searchBox.addListener('places_changed', function() {
-    var places = searchBox.getPlaces();
-    if (places.length == 0) {
-      return;
-    }
-    // Clear out the old markers.
-    markers.forEach(function(marker) {
-      marker.setMap(null);
-    });
-    markers = [];
-    // For each place, get the icon, name and location.
-    var bounds = new google.maps.LatLngBounds();
-    places.forEach(function(place) {
-      if (!place.geometry) {
-        console.log("Returned place contains no geometry");
-        return;
-      }
-      var icon = {
-        url: place.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25)
-      };
-      // Create a marker for each place.
-      markers.push(new google.maps.Marker({
-        map: map,
-        icon: icon,
-        title: place.name,
-        position: place.geometry.location
-      }));
-      if (place.geometry.viewport) {
-        // Only geocodes have viewport.
-        bounds.union(place.geometry.viewport);
-      } else {
-        bounds.extend(place.geometry.location);
-      }
-    });
-    map.fitBounds(bounds);
-  });
 }
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
