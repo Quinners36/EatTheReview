@@ -86,10 +86,16 @@ $(document).ready(function(){
       console.log("Updated successful")
     }).catch(function(error) {
       // An error happened.
-      console.log("Fail");
-      console.log(error);
+if(confirm(error.code+' :\n'+error.message)&& (error.code=="auth/requires-recent-login")){
+		firebase.auth().signOut().then(function() {
+            window.location ='index.html'
+        }, function(error) {
+            // An error happened.
+        });
+	  };
     });
     });
+
 
 	$('#ChangeEmail').click(function(){
     var user = firebase.auth().currentUser;
@@ -97,13 +103,18 @@ $(document).ready(function(){
 
     user.updateEmail(NEmail).then(function() {
       // Update successful.
-      console.log("Updated successful")
-    }).catch(function(error) {
-      // An error happened.
-      console.log("Fail");
-      console.log(error);
-    });
-    });
+        console.log("Updated successful")
+      }).catch(function(error) {
+        // An error happened.
+  	  if(confirm(error.code+' :\n'+error.message)&& (error.code=="auth/requires-recent-login")){
+  		firebase.auth().signOut().then(function() {
+              window.location ='index.html'
+          }, function(error) {
+              // An error happened.
+          });
+  	  };
+      });
+      });
 
 	$('#ChangeInfo').click(function(){
 
@@ -158,6 +169,40 @@ $(document).ready(function(){
 
     });
 
+
+    setTimeout(function(){
+		var database=firebase.database();
+		var user=firebase.auth().currentUser;
+		var ref=database.ref('users/'+user.uid+'/');
+
+		ref.once("value")
+        .then(function(snapshot) {
+          ref.once("value", function(snapshot) {
+
+
+				var Ad1=snapshot.val().AddressLine1;
+				var Ad2=snapshot.val().AddressLine2;
+				var City=snapshot.val().City;
+				var County=snapshot.val().County;
+				var PCo=snapshot.val().PostCode;
+				var Country=snapshot.val().Country;
+
+				console.log(Ad1);
+
+			$('#AddressL1').val(Ad1);
+			$('#AddressL2').val(Ad2);
+			$('#City').val(City);
+			$('#County').val(County);
+			$('#PCode').val(PCo);
+			$('#Country').val(Country);
+			console.log("Hello");
+
+
+
+
+          });
+        });
+		},200);
 
 		var a = window.location.toString();
 		var Ruid = a.substring(a.indexOf("?")+1);

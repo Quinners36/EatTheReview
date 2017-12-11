@@ -2,11 +2,11 @@
 <html>
 <body>
   <script src="Cookies.js"></script>
-  
+
    <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src = "firebase.js"></script>
-  
+
 <header>
 
 <center><img id = "logo" src = "logo.png"></center>
@@ -19,6 +19,7 @@
     <a id = "signout">Logout</a>
     <button id="Cookies" onclick="setCookie('Hello')">Cookie</button>
   </div>
+  <button id="Cookies" onclick="setCookie('0b995a4d90e8defcace0fb7465f227185ca951bd')">Cookie</button>
 
 </div>
 
@@ -33,7 +34,7 @@
          async defer></script>
 
 		 <script>
-		 
+
 		 function initAutocomplete() {
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 53.2734, lng: -7.778320310000026},
@@ -562,7 +563,7 @@
         });
 
 		var markers = [];
-		
+
 	  // Create the search box and link it to the UI element.
 	var input = document.getElementById('pac-input');
    var searchBox = new google.maps.places.SearchBox(input);
@@ -571,12 +572,12 @@
   map.addListener('bounds_changed', function() {
     searchBox.setBounds(map.getBounds());
   });
-  
+
   // Listen for the event fired when the user selects a prediction and retrieve
   // more details for that place.
   searchBox.addListener('places_changed', function() {
     var places = searchBox.getPlaces();
-	
+
     if (places.length == 0) {
       return;
     }
@@ -592,12 +593,12 @@
         console.log("Returned place contains no geometry");
         return;
       }
-	  
-	  
+
+
 	  //check to see if place is a city/town
 	  if(place.website == undefined)
 	  {
-			
+
 			var marker2 = new google.maps.Marker({
             position: place.geometry.location,
             map: map,
@@ -613,7 +614,7 @@
         // Only geocodes have viewport.
         bounds.union(place.geometry.viewport);
       } else {
-	  
+
         bounds.extend(place.geometry.location);
       }
 	  var service2 = new google.maps.places.PlacesService(map);
@@ -623,14 +624,14 @@
 				type : [ 'restaurant'],
 				animation: google.maps.Animation.DROP
             }, processResults2);
-			
+
 			 function processResults2(results, status, pagination) {
         if (status !== google.maps.places.PlacesServiceStatus.OK) {
           return;
         } else {
-		
-		
-		
+
+
+
           results.forEach(createMarker);
 			// if more than 20 results, click this button to show all nearby restaurants
           if (pagination.hasNextPage) {
@@ -644,33 +645,33 @@
               pagination.nextPage();
             });
           }
-		   
+
         }
       }
-	  
-	  
-	  
-	  
+
+
+
+
 	  }else{
-	  
-	  
+
+
 	 createMarker(place);
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
         bounds.union(place.geometry.viewport);
       } else {
-	  
+
         bounds.extend(place.geometry.location);
       }
 	  }
     });
     map.fitBounds(bounds);
-	
+
   });
 
-  
-  
-  
+
+
+
 		// to mark all nearby restaurants
 	var service = new google.maps.places.PlacesService(map);
             service.nearbySearch({
@@ -679,14 +680,14 @@
 				type : [ 'restaurant'],
 				animation: google.maps.Animation.DROP
             }, processResults);
-			
+
 			 function processResults(results, status, pagination) {
         if (status !== google.maps.places.PlacesServiceStatus.OK) {
           return;
         } else {
-		
-		
-		
+
+
+
           results.forEach(createMarker);
 			// if more than 20 results, click this button to show all nearby restaurants
           if (pagination.hasNextPage) {
@@ -700,14 +701,13 @@
               pagination.nextPage();
             });
           }
-		   
+
         }
       }
 
-		
+
 		function createMarker(place) {
-      console.log(place.id);
-      console.log(place.name);
+
 	  //test function broke the location sevices
       //test(place);
             var placeLoc = place.geometry.location;
@@ -722,7 +722,7 @@
         // Only geocodes have viewport.
         bounds2.union(place.geometry.viewport);
       } else {
-	  
+
         bounds2.extend(place.geometry.location);
       }*/
 			marker.addListener('click', function() {
@@ -739,20 +739,39 @@
             '<p><b>Address: </b>' + details.formatted_address + ' <br> ' +
 			'<b>Website: </b>' + details.website + '<br>' +
 			'<b>Phone number: </b>' +  details.formatted_phone_number + ' <br>' +
-      '<a href = "readReview.html?'+details.id+'">Read reviews </a>'+ ' <br>'+'<a href = "Review.html?'+details.id+'"> Leave a review </a>' + ' <br>'+'</div>'+'</div>';
+      '<a href = "readReview.html?'+details.id+'">Read reviews </a>';
 
-      //console.log(checkCookie());
-      //if(getCookie('RestID')==details.id){
-      //  Str=Str+'<a href = "Review.html?'+details.id+'"> Leave a review </a>' + ' <br>'+'</div>'+'</div>';
-      //}else{
-      //  Str=Str+'</div>'+'</div>';
-      //}
 
-              infowindow.setContent([
-                Str].join("<br />"));
+      			if(checkCookie()==details.id){
+      				Str=Str+'<a href = "Review.html?'+details.id+'"> Leave a review </a>' + ' <br>';
+      			}else{
 
-              infowindow.open(map, marker);
-            });
+      			}
+
+      			var newLink;
+      			var Link=firebase.database().ref('Resteraunts/' + details.id+ '/JustEatLink');
+      			Link.on('value', function(snapshot) {
+      				newLink= snapshot.val();
+      				//console.log(newLink);
+
+      			if(newLink!='test'||newLink==null){
+      				Str=Str+'</div>'+'</div>';
+      			}else{
+      				Str=Str+'<a href = "'+newLink+'"> Just Eat Link </a>' + ' <br>'+'</div>'+'</div>';
+      			}
+      			});
+
+
+
+            setTimeout(function(){
+            			infowindow.setContent([
+                            Str].join("<br />"));
+
+                          infowindow.open(map, marker);
+            			},200);
+
+
+                        });
 
 
 
@@ -770,7 +789,7 @@
     alert('Geo Location feature is not supported in this browser.');
 }
 
-	
+
 
 }
 function myFunction() {
