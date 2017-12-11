@@ -1,6 +1,6 @@
 var config = {
   apiKey: "AIzaSyD07XUsubZBt2kGhyG2xPOfOq49UZTyaw4",
-  authDomain: "http://eatthereview.openode.io/",
+  authDomain: "https://eat-the-review.firebaseapp.com",
   databaseURL: "https://eat-the-review.firebaseio.com",
   projectId: "eat-the-review",
   storageBucket: "",
