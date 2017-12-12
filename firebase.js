@@ -83,6 +83,7 @@ $(document).ready(function(){
 
     user.updatePassword(newPassword).then(function() {
       // Update successful.
+	    alert("Update Successful");
       console.log("Updated successful")
     }).catch(function(error) {
       // An error happened.
@@ -103,6 +104,7 @@ if(confirm(error.code+' :\n'+error.message)&& (error.code=="auth/requires-recent
 
     user.updateEmail(NEmail).then(function() {
       // Update successful.
+	    alert("Update Successful");
         console.log("Updated successful")
       }).catch(function(error) {
         // An error happened.
